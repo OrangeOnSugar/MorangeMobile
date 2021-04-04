@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/userbackds"/>
+
+    <TextView
+        android:id="@+id/userlogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:layout_toRightOf="@id/profile_image"
+        android:layout_marginLeft="10dp"
+        android:textSize="18sp"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/bar_status_on"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:civ_border_width="8dp"
+        app:civ_border_color="#05df29"
+        android:visibility="gone"
+        android:layout_below="@+id/userlogin"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="-15dp"
+        android:layout_toRightOf="@id/profile_image"
+        android:layout_toEndOf="@id/profile_image"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/bar_status_off"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:civ_border_width="8dp"
+        app:civ_border_color="#bfbfbf"
+        android:visibility="gone"
+        android:layout_below="@+id/userlogin"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="-15dp"
+        android:layout_toRightOf="@id/profile_image"
+        android:layout_toEndOf="@id/profile_image"/>
+
+    <TextView
+        android:id="@+id/last_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userlogin"
+        android:layout_toRightOf="@id/profile_image"
+        android:text=""
+        android:layout_marginTop="0dp"
+        android:paddingTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:maxLines="1"/>
+
+    <TextView
+        android:id="@+id/last_message_timeDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textSize="12sp"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "561448617463",
+    "firebase_url": "https://morange-d6073.firebaseio.com",
+    "project_id": "morange-d6073",
+    "storage_bucket": "morange-d6073.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561448617463:android:320bcf18eda68b23521af2",
+        "android_client_info": {
+          "package_name": "com.example.morange"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "561448617463-cusltoukkjued0kp2g2eg4gngiqe3358.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.morange",
+            "certificate_hash": "100de914ce6f26b783a6dccf4fd74e751c8c940e"
+          }
+        },
+        {
+          "client_id": "561448617463-th3tcltdatumi3nm8v0idqoop8gic8ad.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5aYRkI4kvu3Sf7jMzbhKBkcSR49qyrr0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561448617463-th3tcltdatumi3nm8v0idqoop8gic8ad.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

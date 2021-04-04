@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background" />
+    <foreground
+        android:gravity="center"
+        android:height="22dp"
+        android:width="23dp"
+        android:drawable="@drawable/ic_vegetarian" />
+</adaptive-icon>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E7790A">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/icon_image"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="40dp"
+                android:scaleType="fitCenter"
+                android:layout_centerHorizontal="true"
+                android:background="@android:color/transparent"
+                android:src="@drawable/reg"/>
+
+            <TextView
+                android:id="@+id/poops"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Регистрация"
+                android:layout_below="@id/icon_image"
+                android:layout_marginTop="15dp"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                style="@style/Text"
+                android:textSize="30dp"/>
+
+            <EditText
+                android:id="@+id/login_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/poops"
+                android:hint="Логин*"
+                android:text=""
+                android:background="@drawable/edita"
+                android:padding="6dp"
+                android:drawableStart="@drawable/customer_48px"
+                android:drawableLeft="@drawable/secured_letter_48px"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="23dp"
+                android:layout_marginLeft="23dp"/>
+
+            <EditText
+                android:id="@+id/mail_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/login_reg"
+                android:hint="Почта*"
+                android:text=""
+                android:inputType="textEmailAddress"
+                android:background="@drawable/edita"
+                android:padding="6dp"
+                android:drawableStart="@drawable/new_post_48px"
+                android:drawableLeft="@drawable/new_post_48px"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="23dp"
+                android:layout_marginLeft="23dp"/>
+
+            <EditText
+                android:id="@+id/passw_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/mail_reg"
+                android:hint="Пароль*"
+                android:text=""
+                android:inputType="textPassword"
+                android:background="@drawable/edita"
+                android:padding="6dp"
+                android:drawableStart="@drawable/password22_48px"
+                android:drawableLeft="@drawable/password22_48px"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="23dp"
+                android:layout_marginLeft="23dp"/>
+
+            <Button
+                android:id="@+id/Registrbu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Зарегистрироваться"
+                android:textColor="@android:color/black"
+                android:background="@drawable/buttona"
+                android:layout_below="@id/passw_reg"
+                android:layout_marginTop="35dp"
+                android:layout_marginRight="63dp"
+                android:layout_marginLeft="63dp"/>
+
+            <TextView
+                android:id="@+id/autorizgo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Registrbu"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="20dp"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:text="У меня есть аккаунт" />
+
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

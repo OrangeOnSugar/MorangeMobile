@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E7790A">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/icon_image"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="70dp"
+                android:scaleType="fitCenter"
+                android:layout_centerHorizontal="true"
+                android:background="@android:color/transparent"
+                android:src="@drawable/fogpass"/>
+
+            <TextView
+                android:id="@+id/pop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/icon_image"
+                android:layout_marginTop="15dp"
+                android:text="Восстановление пароля"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                style="@style/Text"
+                android:textSize="30dp"/>
+
+            <TextView
+                android:id="@+id/text_for_user"
+                android:layout_width="wrap_content"
+                android:layout_below="@id/pop"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="#606060"
+                android:textSize="18sp"
+                android:layout_marginHorizontal="10dp"
+                android:text="Введите адрес электронной почты, на которую был зарегистрирован ваш аккаунт.
+Мы пришлём вам письмо с дальнейшими инструкциями."
+                android:textAlignment="center"
+                android:gravity="center_horizontal" />
+
+
+            <EditText
+                android:id="@+id/mail_forg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/text_for_user"
+                android:hint="Почта..."
+                android:text=""
+                android:inputType="textEmailAddress"
+                android:background="@drawable/edita"
+                android:padding="6dp"
+                android:drawableStart="@drawable/secured_letter_48px"
+                android:drawableLeft="@drawable/secured_letter_48px"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="33dp"
+                android:layout_marginLeft="33dp"/>
+
+
+
+            <Button
+                android:id="@+id/SendMesButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Готово"
+                android:textColor="@android:color/black"
+                android:background="@drawable/buttona"
+                android:layout_below="@id/mail_forg"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="63dp"
+                android:layout_marginLeft="63dp"/>
+
+            <TextView
+                android:id="@+id/authgo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/SendMesButton"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="20dp"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:textSize="15dp"
+                android:text="Назад к авторизации" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

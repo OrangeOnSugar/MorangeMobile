@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".profile">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/MenuSas">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Профиль"
+                android:textColor="#FFF"
+                android:textSize="18sp"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/profile_image_layout"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/bar_layout"
+        android:layout_height="wrap_content"
+        android:background="#FFBD59">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:id="@+id/profile_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"
+                />
+
+            <ImageButton
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/change_image"
+                android:padding="0dp"
+                android:visibility="gone"
+                android:layout_alignRight="@id/profile_image"
+                android:layout_alignBottom="@id/profile_image"
+                android:layout_marginRight="-20dp"
+                android:background="@drawable/btn_rou"
+                android:backgroundTint="#232"
+                android:src="@drawable/ic_camera_alt_black_24dp"
+                />
+            <TextView
+                android:id="@+id/profile_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"
+                android:layout_marginBottom="12dp"
+                android:textColor="#000"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/profile_image"/>
+
+            <TextView
+                android:id="@+id/profile_lastseen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:visibility="gone"
+                android:textSize="12sp"
+                android:textColor="#000"
+                android:layout_marginBottom="12dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/profile_nickname"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <TableRow
+        android:id="@+id/userEmail"
+        android:layout_width="match_parent"
+        android:background="@android:color/transparent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_image_layout"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="25dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/new_post_48px"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/profile_email"
+                android:text="Почта"
+                android:textColor="#6D6D6D"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/profile_email_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_email"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="17sp"/>
+
+        </RelativeLayout>
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/userLogin"
+        android:layout_width="match_parent"
+        android:background="@android:color/transparent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userEmail"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="5dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/customer_48px"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/profile_login"
+                android:text="Логин"
+                android:textColor="#6D6D6D"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/profile_login_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_login"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="17sp"/>
+
+        </RelativeLayout>
+
+    </TableRow>
+
+    <Button
+        android:id="@+id/change_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userLogin"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="63dp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/buttona"
+        android:visibility="gone"
+        android:text="Изменить никнейм"
+        android:textSize="14sp"/>
+
+</RelativeLayout>

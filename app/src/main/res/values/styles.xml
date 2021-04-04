@@ -1,0 +1,24 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar"> false </item>
+        <item name="windowNoTitle"> true </item>
+        <item name="colorPrimary">#2E4053</item>
+    </style>
+    <style name="Text">
+        <item name="fontFamily">serif</item>
+    </style>
+
+    <style name="MenuSas" parent="Theme.AppCompat.Light">
+        <item name="android:background">#FFCE9D</item>
+    </style>
+
+
+</resources>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".settings">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/MenuSas">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Настройки"
+                android:textColor="#FFF"
+                android:textSize="18sp"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/Color_Back_Dialog_Contain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_below="@id/bar_layout">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/Color_Back_Dialog_Picker"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="#E7E7E7"/>
+
+        <TextView
+            android:id="@+id/Color_Back_Dialog_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Цвет фона диалога"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:layout_toRightOf="@id/Color_Back_Dialog_Picker"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/Color_Head_Contain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_below="@id/Color_Back_Dialog_Contain">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/Color_Head_Picker"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/Color_My_Message_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Цвет шапки"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:layout_toRightOf="@id/Color_Head_Picker"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

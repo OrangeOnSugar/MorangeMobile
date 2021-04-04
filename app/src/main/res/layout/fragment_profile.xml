@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp"
+    android:background="#FFFFFF"
+    tools:context=".Fragments.ProfileFragment">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Профиль"
+                android:textSize="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="#FF5900 "
+                android:textStyle="bold"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:id="@+id/profile_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="60dp"
+                />
+
+            <ImageButton
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/change_image"
+                android:padding="0dp"
+                android:layout_marginTop="-70dp"
+                android:layout_marginRight="80dp"
+                android:background="@drawable/btn_rou"
+                android:layout_below="@id/profile_image"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_camera_alt_black_24dp"
+                />
+
+            <TableRow
+                android:id="@+id/imagedd"
+                android:layout_width="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/change_image">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/customer_48px"/>
+
+            </TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/this_login"
+                android:text="Логин"
+                android:layout_toRightOf="@+id/imagedd"
+                android:layout_below="@+id/change_image"
+                android:textColor="#6D6D6D"
+                android:textSize="14sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/login"
+                android:text="login"
+                android:layout_marginTop="18dp"
+                android:layout_toRightOf="@+id/imagedd"
+                android:layout_below="@+id/change_image"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp"
+                android:textSize="22sp"/>
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
