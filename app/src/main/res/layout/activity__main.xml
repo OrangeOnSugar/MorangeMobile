@@ -37,11 +37,49 @@
 
        </androidx.appcompat.widget.Toolbar>
 
+       <com.facebook.shimmer.ShimmerFrameLayout
+           android:layout_below="@id/toolbar"
+           android:id="@+id/shimmerLayout"
+           android:layout_width="match_parent"
+           app:shimmer_auto_start="true"
+           android:layout_height="match_parent">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center"
+               android:orientation="vertical">
+
+               <include layout="@layout/shimmer_user_item" />
+
+               <include layout="@layout/shimmer_user_item" />
+
+               <include layout="@layout/shimmer_user_item" />
+
+               <include layout="@layout/shimmer_user_item" />
+
+               <include layout="@layout/shimmer_user_item" />
+
+               <include layout="@layout/shimmer_user_item" />
+
+               <include layout="@layout/shimmer_user_item" />
+
+               <include layout="@layout/shimmer_user_item" />
+
+               <include layout="@layout/shimmer_user_item" />
+
+               <include layout="@layout/shimmer_user_item" />
+
+           </LinearLayout>
+
+       </com.facebook.shimmer.ShimmerFrameLayout>
+
        <androidx.recyclerview.widget.RecyclerView
            android:layout_below="@id/toolbar"
            android:id="@+id/chats"
            android:layout_width="match_parent"
-           android:layout_height="match_parent" />
+           android:layout_height="match_parent"
+           android:visibility="gone"/>
 
    </RelativeLayout>
 

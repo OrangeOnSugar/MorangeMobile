@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.morange.HelpClasses.DateTimeDifferent;
 import com.example.morange.MessageActivity;
 import com.example.morange.ModeJS.Chat;
 import com.example.morange.ModeJS.UserINFO;
@@ -61,52 +62,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         final UserINFO userINFO = msue.get(position);
         holder.userlogin.setText(userINFO.getUsername());
-        if (userINFO.getImageURL().equals("default"))
-        {
-            holder.prof_ima.setImageResource(R.drawable.userbackds);
-        }
-        else
-        {
-            Glide.with(mcontext).load(userINFO.getImageURL()).into(holder.prof_ima);
-        }
+        Glide.with(mcontext).load(userINFO.getImageURL().equals("default")?R.drawable.userbackds:userINFO.getImageURL()).into(holder.prof_ima);
 
-        if (ischat)
-        {
+        if (ischat) {
             lastMessage(userINFO.getId(), holder.last_message, holder.last_message_DateTime);
         }
-        else
-        {
+        else {
             holder.last_message.setVisibility(View.GONE);
         }
 
+        holder.status_on.setVisibility(ischat?(userINFO.getStatus().equals("онлайн")?View.VISIBLE:View.GONE):View.GONE);
+        holder.status_off.setVisibility(ischat?(userINFO.getStatus().equals("онлайн")?View.GONE:View.VISIBLE):View.GONE);
 
-        if (ischat)
-        {
-            if(userINFO.getStatus().equals("онлайн"))
-            {
-                holder.status_on.setVisibility(View.VISIBLE);
-                holder.status_off.setVisibility(View.GONE);
-            }
-            else
-            {
-                holder.status_on.setVisibility(View.GONE);
-                holder.status_off.setVisibility(View.VISIBLE);
-            }
-        }
-        else
-        {
-            holder.status_on.setVisibility(View.GONE);
-            holder.status_off.setVisibility(View.GONE);
-        }
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mcontext, MessageActivity.class);
-                intent.putExtra("userid",userINFO.getId());
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mcontext.startActivity(intent);
-            }
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(mcontext, MessageActivity.class);
+            intent.putExtra("userid",userINFO.getId());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mcontext.startActivity(intent);
         });
     }
 
@@ -135,26 +107,28 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         }
     }
 
-    private String getTimeDateANDLocal(long time)
-    {
+    private String hoursDiffernt(long timestamp) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ssZ");
-        String DateTime = format.format(new Date(time));
-
+        String DateTime = format.format(new Date(timestamp));
+        Date value;
+        String[] date_and_timeGet = {"",""};
         format.setTimeZone(TimeZone.getTimeZone("GMT"));
         try
         {
-            Date value = format.parse(DateTime);
-
-            SimpleDateFormat newFormat = new SimpleDateFormat("HH:mm");
+            value = format.parse(DateTime);
+            SimpleDateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm");
             newFormat.setTimeZone(TimeZone.getDefault());
             DateTime = newFormat.format(value);
+            date_and_timeGet[0] = DateTime.substring(DateTime.indexOf("T")+1);
+            date_and_timeGet[1] = DateTime.substring(0,DateTime.indexOf("T"));
+            value = newFormat.parse(DateTime);
         }
         catch (ParseException e) {
             e.printStackTrace();
-            DateTime = "";
+            date_and_timeGet = new String[]{"", ""};
+            value = new Date();
         }
-
-        return  DateTime;
+        return DateTimeDifferent.dateDiffrent(value,date_and_timeGet);
     }
 
     private void lastMessage(final String userid, final TextView last_message, final TextView message_timedate)
@@ -162,116 +136,40 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         try {
             thelastmessage = "default";
             final FirebaseUser fuser = FirebaseAuth.getInstance().getCurrentUser();
-            if (senderorreceiver)
-            {
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats").child(userid+"|"+fuser.getUid());
-
-
-
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        try
-                        {
-                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
-                            {
-                                Chat chat = dataSnapshot1.getValue(Chat.class);
-                                assert chat != null;
-                                assert fuser != null;
-                                if(chat.getReceiver().equals(fuser.getUid()) && chat.getSender().equals(userid))
-                                {
-                                    thelastmessage = chat.getMessage();
-                                    message_timedate.setText(getTimeDateANDLocal(chat.getDatetime()));
-                                    last_message.setTextColor(Color.parseColor("#8F8F8F"));
-                                }
-                                else if (chat.getReceiver().equals(userid) && chat.getSender().equals(fuser.getUid()))
-                                {
-                                    thelastmessage = "Вы: "+chat.getMessage();
-                                    message_timedate.setText(getTimeDateANDLocal(chat.getDatetime()));
-                                    last_message.setTextColor(Color.parseColor("#FF6800"));
-                                }
+            DatabaseReference reference;
+            reference = FirebaseDatabase.getInstance().getReference("Chats").child(senderorreceiver?userid+"|"+fuser.getUid():fuser.getUid()+"|"+userid).child("messages");
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            Chat chat = dataSnapshot1.getValue(Chat.class);
+                            assert chat != null;
+                            assert fuser != null;
+                            if(chat.getReceiver().equals(fuser.getUid()) && chat.getSender().equals(userid)) {
+                                thelastmessage = chat.getMessage();
+                                message_timedate.setText(hoursDiffernt(chat.getDatetime()));
+                                last_message.setTextColor(Color.parseColor("#8F8F8F"));
+                            } else if (chat.getReceiver().equals(userid) && chat.getSender().equals(fuser.getUid())) {
+                                thelastmessage = "Вы: "+chat.getMessage();
+                                message_timedate.setText(hoursDiffernt(chat.getDatetime()));
+                                last_message.setTextColor(Color.parseColor("#FF6800"));
                             }
-
-                            switch (thelastmessage)
-                            {
-                                case "default":
-                                    last_message.setText("Сообщений пока нет");
-                                    break;
-
-                                default:
-                                    last_message.setText(thelastmessage);
-                                    break;
-                            }
-
-                            thelastmessage = "default";
                         }
-                        catch(Exception ex)
-                        {
 
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        last_message.setText(thelastmessage.equals("default")?"Сообщений пока нет":thelastmessage);
+                        thelastmessage = "default";
+                    } catch(Exception ex) {
 
                     }
-                });
-            }
-            else
-            {
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats").child(fuser.getUid()+"|"+userid);
+                }
 
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        try
-                        {
-                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
-                            {
-                                Chat chat = dataSnapshot1.getValue(Chat.class);
-                                assert chat != null;
-                                assert fuser != null;
-                                if(chat.getReceiver().equals(fuser.getUid()) && chat.getSender().equals(userid))
-                                {
-                                    thelastmessage = chat.getMessage();
-                                    message_timedate.setText(getTimeDateANDLocal(chat.getDatetime()));
-                                    last_message.setTextColor(Color.parseColor("#8F8F8F"));
-                                }
-                                else if (chat.getReceiver().equals(userid) && chat.getSender().equals(fuser.getUid()))
-                                {
-                                    thelastmessage = "Вы: "+chat.getMessage();
-                                    message_timedate.setText(getTimeDateANDLocal(chat.getDatetime()));
-                                    last_message.setTextColor(Color.parseColor("#FF6800"));
-                                }
-                            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                            switch (thelastmessage)
-                            {
-                                case "default":
-                                    last_message.setText("Сообщений пока нет");
-                                    break;
-
-                                default:
-                                    last_message.setText(thelastmessage);
-                                    break;
-                            }
-
-                            thelastmessage = "default";
-                        }
-                        catch(Exception ex)
-                        {
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        }
-        catch (Exception ex) {
+                }
+            });
+        } catch (Exception ex) {
 
         }
 

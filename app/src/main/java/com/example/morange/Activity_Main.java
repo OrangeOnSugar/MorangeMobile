@@ -1,19 +1,18 @@
 package com.example.morange;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.morange.Adapter.UserAdapter;
-import com.example.morange.ModeJS.Chat;
+import com.example.morange.HelpClasses.OfflineOfflineChecker;
 import com.example.morange.ModeJS.UserINFO;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.morange.Notifications.Token;
+import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,21 +21,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.installations.FirebaseInstallations;
+import com.google.firebase.installations.InstallationTokenResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -47,6 +48,7 @@ public class Activity_Main extends AppCompatActivity {
 
     private UserAdapter userAdapter;
     private List<UserINFO> mUsers;
+    private ShimmerFrameLayout shimmerFrameLayout;
 
     private List<String> userList;
 
@@ -62,54 +64,39 @@ public class Activity_Main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__main);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        OfflineOfflineChecker.status(firebaseUser);
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
         NavigationView navigationView = findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                if(menuItem.getItemId() == R.id.addfriends)
-                {
-                    startActivity(new Intent(Activity_Main.this,AddFriends_Activity.class));
-                }
-                else if (menuItem.getItemId() == R.id.settings)
-                {
-                    startActivity(new Intent(Activity_Main.this,settings.class));
-                }
-                else if (menuItem.getItemId() == R.id.exit)
-                {
-                    FirebaseAuth.getInstance().signOut();
-                    startActivity(new Intent(Activity_Main.this,AuthorizaActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                }
-                return false;
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            if(menuItem.getItemId() == R.id.addfriends) {
+                startActivity(new Intent(Activity_Main.this, UsersActivity.class));
+            } else if (menuItem.getItemId() == R.id.settings) {
+                startActivity(new Intent(Activity_Main.this, SettingsActivity.class));
+            } else if (menuItem.getItemId() == R.id.exit) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(Activity_Main.this,AuthorizaActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
             }
+            return false;
         });
         View header = navigationView.getHeaderView(0);
         pro_i = header.findViewById(R.id.userLogo);
-        pro_i.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Activity_Main.this, profile.class);
-                intent.putExtra("UserID",firebaseUser.getUid());
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Activity_Main.this.startActivity(intent);
-            }
+        pro_i.setOnClickListener(v -> {
+            Intent intent = new Intent(Activity_Main.this, ProfileActivity.class);
+            intent.putExtra("UserID",firebaseUser.getUid());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Activity_Main.this.startActivity(intent);
         });
+
         login_s = header.findViewById(R.id.userLogin);
 
+        shimmerFrameLayout = findViewById(R.id.shimmerLayout);
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UserINFO userINFO = dataSnapshot.getValue(UserINFO.class);
                 login_s.setText(userINFO.getUsername());
-                if (userINFO.getImageURL().equals("default"))
-                {
-                    pro_i.setImageResource(R.drawable.userbackds);
-                }
-                else
-                {
-                    Glide.with(getApplicationContext()).load(userINFO.getImageURL()).into(pro_i);
-                }
+                Glide.with(getApplicationContext()).load(userINFO.getImageURL().equals("default")?R.drawable.userbackds:userINFO.getImageURL()).into(pro_i);
             }
 
             @Override
@@ -129,62 +116,56 @@ public class Activity_Main extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     userList.clear();
-
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        //Chat chat = snapshot.getValue(Chat.class);
-
-                        if (snapshot.getKey().contains("|"+firebaseUser.getUid()))
-                        {
+                        if (snapshot.getKey().contains("|"+firebaseUser.getUid())) {
                             userList.add(snapshot.getKey().replace("|"+firebaseUser.getUid(),""));
                             senderorreceiver = true;
                         }
-                        else if(snapshot.getKey().contains(firebaseUser.getUid()+"|"))
-                        {
+                        else if(snapshot.getKey().contains(firebaseUser.getUid()+"|")) {
                             userList.add(snapshot.getKey().replace(firebaseUser.getUid()+"|",""));
                             senderorreceiver = false;
                         }
-                        /*if (chat.getSender().equals(firebaseUser.getUid())) {
-                            userList.add(chat.getReceiver());
-                        }
-
-                        if (chat.getReceiver().equals(firebaseUser.getUid())) {
-                            userList.add(chat.getSender());
-                        }*/
-
                         readChats();
                     }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(s -> UpdateToken(s));
     }
 
-    private void readChats()
-    {
-        mUsers = new ArrayList<>();
+    private void UpdateToken(String token){
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("Users")
+                .child(firebaseUser.getUid())
+                .child("tokens");
+        Token newToken = new Token(token);
+        HashMap<String,Object> key = new HashMap<>();
+        key.put(newToken.getToken(),newToken.getToken());
+        reference.setValue(key);
+    }
 
+    private void readChats() {
+        mUsers = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUsers.clear();
-
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     UserINFO user =  snapshot.getValue(UserINFO.class);
-
-                    for (String id : userList)
-                    {
+                    for (String id : userList) {
                         assert user != null;
-                        if( user.getId().equals(id) && !mUsers.contains(user))
-                        {
+                        if( user.getId().equals(id) && !mUsers.contains(user)) {
                             mUsers.add (user);
                         }
                     }
                 }
-
+                shimmerFrameLayout.stopShimmer();
+                shimmerFrameLayout.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
                 userAdapter = new UserAdapter(getApplicationContext(), mUsers, true,senderorreceiver);
                 recyclerView.setAdapter(userAdapter);
             }
@@ -198,38 +179,20 @@ public class Activity_Main extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity__main, menu);
         return true;
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
-
-
-    private void status(String status)
-    {
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("status", status);
-
-        reference.updateChildren(hashMap);
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        status("онлайн");
+        shimmerFrameLayout.startShimmer();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        status("офлайн");
+        shimmerFrameLayout.stopShimmer();
     }
 }

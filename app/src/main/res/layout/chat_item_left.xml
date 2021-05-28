@@ -126,6 +126,67 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/type_audio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <ImageButton
+                    android:id="@+id/message_audio_play_and_stop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:layout_marginVertical="7dp"
+                    android:layout_marginHorizontal="7dp"
+                    android:src="@drawable/ic_baseline_play_circle_button_left"/>
+
+                <SeekBar
+                    android:id="@+id/message_audio_bar"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/message_audio_play_and_stop"
+                    android:layout_width="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/message_audio_duration"
+                    android:textColor="#000"
+                    android:text="00:00 / 00:00"
+                    android:layout_below="@id/message_audio_bar"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/message_audio_play_and_stop"
+                    android:textSize="8sp"
+                    android:visibility="visible"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/message_audio_time"
+                        android:textColor="#000"
+                        android:text="11:00"
+                        android:layout_marginRight="7dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/message_audio_bar"
+                        android:layout_marginTop="15dp"
+                        android:textSize="8sp"
+                        android:visibility="visible"/>
+
+                    <ImageView
+                        android:id="@+id/message_audio_status"
+                        android:layout_width="10dp"
+                        android:layout_marginRight="3dp"
+                        android:layout_toRightOf="@id/message_audio_time"
+                        android:layout_height="10dp"
+                        android:layout_centerVertical="true"
+                        android:visibility="visible" />
+
+            </RelativeLayout>
+
         </RelativeLayout>
 
 

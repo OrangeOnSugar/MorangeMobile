@@ -15,4 +15,8 @@
     <string name="menu_settings">Настройки</string>
     <string name="menu_exit">Выйти</string>
     <string name="menu_slideshow">Slideshow</string>
+
+    <string name="settings_notification">Уведомления и звуки</string>
+    <string name="settings_customization">Внешний вид</string>
+
 </resources>

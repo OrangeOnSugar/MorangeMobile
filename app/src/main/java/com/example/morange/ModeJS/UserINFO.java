@@ -9,8 +9,9 @@ public class UserINFO {
     private String username;
     private String email;
     private long lastseen;
+    private long Rdate;
 
-    public UserINFO(String id,String login, String imageURL, String status,String username,String email, long lastseen)
+    public UserINFO(String id, String login, String imageURL, String status, String username, String email, long lastseen, long registrationDate)
     {
         this.id=id;
         this.login = login;
@@ -19,6 +20,18 @@ public class UserINFO {
         this.username = username;
         this.email = email;
         this.lastseen = lastseen;
+        this.Rdate = registrationDate;
+    }
+
+    public UserINFO() {
+    }
+
+    public long getRegistrationDate() {
+        return Rdate;
+    }
+
+    public void setRegistrationDate(long registrationDate) {
+        this.Rdate = registrationDate;
     }
 
     public String getUsername() {
@@ -45,8 +58,6 @@ public class UserINFO {
         this.lastseen = lastseen;
     }
 
-    public UserINFO() {
-    }
 
     public String getId() {
         return id;

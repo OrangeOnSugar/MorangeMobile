@@ -52,7 +52,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text=""
+                        android:text="dd"
                         android:textColor="@android:color/black"
                         android:layout_marginRight="35dp"
                         android:textSize="14sp"
@@ -134,27 +134,69 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/type_audio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <ImageButton
+                    android:id="@+id/message_audio_play_and_stop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:layout_marginVertical="7dp"
+                    android:layout_marginHorizontal="7dp"
+                    android:src="@drawable/ic_baseline_play_circle_button_right"/>
+
+                <SeekBar
+                    android:id="@+id/message_audio_bar"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/message_audio_play_and_stop"
+                    android:layout_width="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/message_audio_duration"
+                    android:textColor="#373737"
+                    android:text=""
+                    android:layout_below="@id/message_audio_bar"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/message_audio_play_and_stop"
+                    android:textSize="8sp"
+                    android:visibility="visible"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/message_audio_time"
+                    android:textColor="#000"
+                    android:text=""
+                    android:layout_marginRight="5dp"
+                    android:layout_below="@id/message_audio_bar"
+                    android:layout_toLeftOf="@id/message_audio_status"
+                    android:layout_marginTop="15dp"
+                    android:textSize="8sp"
+                    android:visibility="visible"/>
+
+                <ImageView
+                    android:id="@+id/message_audio_status"
+                    android:layout_width="10dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_below="@id/message_audio_bar"
+                    android:layout_marginTop="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="10dp"
+                    android:visibility="visible" />
+
+            </RelativeLayout>
+
         </RelativeLayout>
-
-        <!--<TextView
-            android:id="@+id/show_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="hello"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            android:padding="10dp"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/back_right"
-            android:layout_alignParentRight="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/mes_seen"
-            android:textSize="10dp"
-            android:layout_below="@id/show_message"
-            android:layout_alignParentRight="true"/>-->
 
     </RelativeLayout>
 
